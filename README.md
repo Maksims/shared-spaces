@@ -21,7 +21,7 @@ To use it, the developer adds the "shared" feature to the []`requestSession`](ht
 - A shared space is only exposed to the particular site. For instance, 'bar.com/a.html' will not be able to see the shared space of 'bar.com/b.html'. They will each get a unique space and uuid.
 - When the WebXR session starts, it may take a couple of seconds to establish the correct shared space. Until then, the browser will report a default shared space. After the correct one is established, the `reset` event will be called on the shared space and a new coordinate system and UUID will be established. If the headset was first to go immersive, no reset event is generated.
 - Participants may enter and leave at will. They will always be  able to establish a common coordiante system when restarting the WebXR session. (By design, the origin of the first headset that created a shared space will be origin of the common coordinate space).
-- When a partipant exists WebXR, the shared spade is lost and will need to be recreated when reentering WebXR.
+- When a partipant exits WebXR, the shared space is lost and will need to be recreated when reentering WebXR.
 - Headsets may come and go freely from the shared space, but once the last one leaves, the shared space is lost. It may be possible to recover it but we need more developer feedback on a good API shape for this.
 
 ## Additions to the WebXR spec
@@ -39,8 +39,5 @@ Here's a small recording of me and my daughter playing the game:
 Quick facts:
 - the experience uses [peerjs](https://peerjs.com/) to communicate between headsets.
 - the experience will send the shared space UUID and the peerjs UUID to a server and it will return a list of other headsets with that same shared space UUID. This list is then used to connect to the other sets.
-- every 5 seconds, the location of the headset and the controllers are sent to the other participants.
-- hit testing of the bullits is done on the headset that does the "shooting". Score is also kept on the server and sent down to all participants.
-
-
-
+- every 5th frame (~18 times a second with 90Hz / every ~56ms), the location of the headset and the controllers are sent to the other participants.
+- hit testing of the bullets is done on the headset that does the "shooting". Score is also kept on the server and sent down to all participants.
